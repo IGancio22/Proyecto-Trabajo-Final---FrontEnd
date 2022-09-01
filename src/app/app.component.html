@@ -1,0 +1,21 @@
+<body>
+  <app-navbar></app-navbar>
+  <div class="row container-fluid d-flex justify-content-center">
+    <div id="content" role="main" class="col-sm-12" m-2>
+      <router-outlet>
+        <app-welcome-section></app-welcome-section>
+        <app-about-me></app-about-me>
+        <app-experience></app-experience>
+        <app-education></app-education>
+        <app-skills-and-languages></app-skills-and-languages>
+        <app-cvportfolio></app-cvportfolio>
+        <app-contact></app-contact>
+      </router-outlet>
+    </div>
+  </div>
+  <div class="row container-fluid">
+    <div id="footer" class="col-md-12">
+      <app-copyright-igancio></app-copyright-igancio>
+    </div>
+  </div>
+</body>

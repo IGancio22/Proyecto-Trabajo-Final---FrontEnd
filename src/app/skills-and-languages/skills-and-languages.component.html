@@ -1,0 +1,214 @@
+<div class="border border-1 border-secondary rounded-3 bg-light container-fluid my-5 py-5" id="skillandlangCRUD">
+    <h2 class="text-center">Habilidades</h2>
+    <div class="row justify-content-center mx-2" id="skillCRUDcontainer">
+        <div class="float-right btn-group btn-group-sm mt-1 text-center d-inline-block">
+            <a *ngIf="loginService.isUserLoggedIn()" (click)="onOpenModal(null!, 'skilladd')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Add"><i class="fa fa-plus"></i> </a>
+        </div>
+        <div *ngFor="let habilidad of habilidades" class="rounded-3 col-lg-3 m-2 text-center border border-2 py-1">
+            <div class="text-dark my-1 skilllangname">{{habilidad.name}}</div>
+            <div class="progress row my-3 mx-1">
+                <div class="progress-bar text-left" role="progressbar" [ngStyle]="{ width: habilidad.val + '%'}" v-bind:aria-valuenow="habilidad.val" aria-valuemin="0" aria-valuemax="100">{{habilidad.altName}} {{habilidad.val}}%</div>
+            </div>
+            <hr />
+            <div class="float-right btn-group btn-group-sm mb-3">
+                <a *ngIf="loginService.isUserLoggedIn()" (click)="onOpenModal(habilidad, 'skilledit')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                <a *ngIf="loginService.isUserLoggedIn()" (click)="onOpenModal(habilidad, 'skilldelete')" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <h2 class="text-center">Lenguajes</h2>
+    <div class="row justify-content-center mx-2" id="langCRUDcontainer">
+        <div class="float-right btn-group btn-group-sm mt-1 text-center d-inline-block">
+            <a *ngIf="loginService.isUserLoggedIn()" (click)="onOpenModal(null!, 'langadd')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Add"><i class="fa fa-plus"></i> </a>
+        </div>
+        <div *ngFor="let lenguaje of lenguajes" class="rounded-3 col-lg-3 m-2 text-center border border-2 py-1">
+            <div class="text-dark my-1 skilllangname">{{lenguaje.name}}</div>
+            <div class="progress row my-3 mx-1">
+                <div class="progress-bar text-left" role="progressbar" [ngStyle]="{ width: lenguaje.val + '%'}" v-bind:aria-valuenow="lenguaje.val" aria-valuemin="0" aria-valuemax="100">{{lenguaje.altName}} {{lenguaje.val}}%</div>
+            </div>
+            <hr />
+            <div class="float-right btn-group btn-group-sm mb-3">
+                <a *ngIf="loginService.isUserLoggedIn()" (click)="onOpenModal(lenguaje, 'langedit')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                <a *ngIf="loginService.isUserLoggedIn()" (click)="onOpenModal(lenguaje, 'langdelete')" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+            </div>  
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Skill -->
+<!-- Add Modal HTML -->
+<div id="addSkillModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #addSkillForm = "ngForm" (ngSubmit)="onAddSkill(addSkillForm)">
+                <div class="modal-header">						
+                    <h4 class="modal-title">Dar Alta a Habilidad</h4>
+                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" ngModel name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre Corto</label>
+                        <input type="text" ngModel name="altName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>From 1 to 100, Mastery</label>
+                        <input type="number" ngModel name="val" min="0" max="100" class="form-control" required>
+                    </div>			
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
+                    <input [disabled]="addSkillForm.invalid" type="submit" class="btn btn-info" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal HTML -->
+<div id="editSkillModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #updateSkillForm = "ngForm">
+                <div class="modal-header">						
+                    <h4 class="modal-title">Modificar Habilidad</h4>
+                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" ngModel="{{editSkill?.name}}" name="name" class="form-control" required>
+                    </div>
+                    <input type="hidden" ngModel="{{editSkill?.id}}" name="id" class="form-control" id="id" placeholder="">
+                    <div class="form-group">
+                        <label>Nombre Corto</label>
+                        <input type="text" ngModel="{{editSkill?.altName}}" name="altName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>From 1 to 100, Mastery</label>
+                        <input type="number" ngModel="{{editSkill?.val}}" name="val" min="0" max="100" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
+                    <input (click)="onUpdateSkill(updateSkillForm.value)" [disabled]="updateSkillForm.invalid" type="submit" class="btn btn-info" value="Save">
+                    <!-- <button [disabled]="editSkillForm.invalid" type="submit" class="btn btn-info" value="Save"></button> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal HTML -->
+<div id="deleteSkillModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">						
+                    <h4 class="modal-title">Dar Baja a Habilidad</h4>
+                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body text-center">					
+                    <p>Esta seguro que quiere borrar el registro {{deleteSkill?.name}}?</p>
+                    <p class="text-danger">Esta operación no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
+                    <input (click)="onDeleteSkill(deleteSkill.id)" type="submit" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal de Language -->
+<!-- Add Modal HTML -->
+<div id="addLanguageModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #addLanguageForm = "ngForm" (ngSubmit)="onAddLanguage(addLanguageForm)">
+                <div class="modal-header">						
+                    <h4 class="modal-title">Dar Alta a Habilidad</h4>
+                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" ngModel name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre Corto</label>
+                        <input type="text" ngModel name="altName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>From 1 to 100, Mastery</label>
+                        <input type="number" ngModel name="val" min="0" max="100" class="form-control" required>
+                    </div>			
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
+                    <input [disabled]="addLanguageForm.invalid" type="submit" class="btn btn-info" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal HTML -->
+<div id="editLanguageModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #updateLanguageForm = "ngForm">
+                <div class="modal-header">						
+                    <h4 class="modal-title">Modificar Habilidad</h4>
+                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" ngModel="{{editLanguage?.name}}" name="name" class="form-control" required>
+                    </div>
+                    <input type="hidden" ngModel="{{editLanguage?.id}}" name="id" class="form-control" id="id" placeholder="">
+                    <div class="form-group">
+                        <label>Nombre Corto</label>
+                        <input type="text" ngModel="{{editLanguage?.altName}}" name="altName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>From 1 to 100, Mastery</label>
+                        <input type="number" ngModel="{{editLanguage?.val}}" name="val" min="0" max="100" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
+                    <input (click)="onUpdateLanguage(updateLanguageForm.value)" [disabled]="updateLanguageForm.invalid" type="submit" class="btn btn-info" value="Save">
+                    <!-- <button [disabled]="editLanguageForm.invalid" type="submit" class="btn btn-info" value="Save"></button> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal HTML -->
+<div id="deleteLanguageModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">						
+                    <h4 class="modal-title">Dar Baja a Habilidad</h4>
+                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body text-center">					
+                    <p>Esta seguro que quiere borrar el registro {{deleteLanguage?.name}}?</p>
+                    <p class="text-danger">Esta operación no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
+                    <input (click)="onDeleteLanguage(deleteLanguage.id)" type="submit" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

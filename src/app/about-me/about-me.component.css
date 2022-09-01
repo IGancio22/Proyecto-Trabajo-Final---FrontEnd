@@ -1,0 +1,8 @@
+#aboutMe{
+    font-size: large;
+}
+
+#AboutMeContainer{
+    max-width: 400px !important;
+    margin: auto !important;
+}

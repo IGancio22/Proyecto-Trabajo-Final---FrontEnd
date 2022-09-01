@@ -1,0 +1,118 @@
+<div class="border border-1 border-secondary rounded-3 bg-light my-5 py-5 text-center" id="educationCRUD">
+    <h2 class="text-center">Educación</h2>
+    <div class="float-right btn-group btn-group-sm mt-1 text-center d-inline-block">
+        <a *ngIf="loginService.isUserLoggedIn()" (click)="onOpenModal(null!, 'educationadd')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Add"><i class="fa fa-plus"></i> </a>
+    </div>
+    <div *ngFor="let educacion of educaciones" class="row container-fluid m-1 d-flex justify-content-center">
+        <div class="row container-fluid">
+            <div class="col-lg-2 d-flex align-items-center justify-content-center order-lg-2">
+                <img src="{{educacion.imageURL}}" alt="Foto de {{educacion.name}}"
+                    class="d-inline-block align-top rounded-circle border border-5 mt-3 mb-3 bg-primary" width="200">
+            </div>
+            <div
+                class="col-lg-9 bg-white border border-top-0 rounded-pill mt-md-3 mb-3 p-3 d-flex align-items-center justify-content-center">
+                <div class="row container">
+                    <div class="col">
+                        <h3 class="bg-light p-3 border border-top-0 rounded-pill text-center">{{educacion.name}}</h3>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <p class="m-4 text-center">{{educacion.description}}</p>
+                    </div>
+                    <div class="float-right btn-group btn-group-sm mb-3 d-inline-block text-center">
+                        <a *ngIf="loginService.isUserLoggedIn()" (click)="onOpenModal(educacion, 'educationedit')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                        <a *ngIf="loginService.isUserLoggedIn()" (click)="onOpenModal(educacion, 'educationdelete')" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                    </div>  
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Education -->
+<!-- Add Modal HTML -->
+<div id="addEducationModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #addEducationForm = "ngForm" (ngSubmit)="onAddEducation(addEducationForm)">
+                <div class="modal-header">						
+                    <h4 class="modal-title">Dar Alta a Educacion</h4>
+                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" ngModel name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion</label>
+                        <input type="text" ngModel name="description" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="text" ngModel name="imageURL" class="form-control" required>
+                    </div>			
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
+                    <input [disabled]="addEducationForm.invalid" type="submit" class="btn btn-info" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal HTML -->
+<div id="editEducationModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #updateEducationForm = "ngForm">
+                <div class="modal-header">						
+                    <h4 class="modal-title">Modificar Educacion</h4>
+                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" ngModel="{{editEducation?.name}}" name="name" class="form-control" required>
+                    </div>
+                    <input type="hidden" ngModel="{{editEducation?.id}}" name="id" class="form-control" id="id" placeholder="">
+                    <div class="form-group">
+                        <label>Descripcion de la educacion</label>
+                        <input type="text" ngModel="{{editEducation?.description}}" name="description" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="text" ngModel="{{editEducation?.imageURL}}" name="imageURL" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
+                    <input (click)="onUpdateEducation(updateEducationForm.value)" [disabled]="updateEducationForm.invalid" type="submit" class="btn btn-info" value="Save">
+                    <!-- <button [disabled]="editEducationForm.invalid" type="submit" class="btn btn-info" value="Save"></button> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal HTML -->
+<div id="deleteEducationModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">						
+                    <h4 class="modal-title">Dar Baja a Habilidad</h4>
+                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body text-center">					
+                    <p>Esta seguro que quiere borrar el registro {{deleteEducation?.name}}?</p>
+                    <p class="text-danger">Esta operación no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
+                    <input (click)="onDeleteEducation(deleteEducation.id)" type="submit" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
