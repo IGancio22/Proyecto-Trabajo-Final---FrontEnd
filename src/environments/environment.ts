@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://aptpfinal-portfolioback.herokuapp.com/'
+  apiBaseUrl: 'https://aptpfinal-portfolioback.herokuapp.com'
 };
 
 /*
