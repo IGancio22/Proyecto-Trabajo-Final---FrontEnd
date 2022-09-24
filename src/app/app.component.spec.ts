@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title '06142022Angular'`, () => {
+  it(`should have as title 'Portfolio Website Argentina Programa'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('06142022Angular');
+    expect(app.title).toEqual('Portfolio Website Argentina Programa');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('06142022Angular app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('Portfolio Website Argentina Programa app is running!');
   });
 });
