@@ -13,7 +13,7 @@
             <form #loginForm = "ngForm" (ngSubmit)="checkLogin(loginForm.value)">
                 <div class="modal-header">						
                     <h4 class="modal-title">Login</h4>
-                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                    <button #closeLoginModalButton type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 </div>
                 <div class="modal-body">					
                     <div class="form-group">
@@ -42,14 +42,14 @@
             <form>
                 <div class="modal-header">						
                     <h4 class="modal-title">Logout</h4>
-                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                    <button #closeLogoutModalButton type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 </div>
                 <div class="modal-body text-center">					
                     <p>Esta seguro que quiere cerrar su sesion?</p>
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
-                    <input (click)="loginService.logOut()" type="submit"  class="btn btn-danger" value="Logout">
+                    <input (click)="logout()" (click)="loginService.logOut()" type="submit"  class="btn btn-danger" value="Logout">
                 </div>
             </form>
         </div>

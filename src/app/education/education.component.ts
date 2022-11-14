@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { EducationArray } from '../interfaceArrays'
 import { EducationService } from './education.service';
 import { AuthenticationService } from '../authentication.service';
+import { ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-education',
@@ -11,6 +12,10 @@ import { AuthenticationService } from '../authentication.service';
   styleUrls: ['./education.component.css']
 })
 export class EducationComponent implements OnInit {
+  @ViewChild('closeAddModalButton') closeAddModalButton: ElementRef;
+  @ViewChild('closeUpdateModalButton') closeUpdateModalButton: ElementRef;
+  @ViewChild('closeDeleteModalButton') closeDeleteModalButton: ElementRef;
+
   public educaciones: EducationArray[] = [];
   editEducation: EducationArray;
   deleteEducation: EducationArray;
@@ -39,6 +44,9 @@ export class EducationComponent implements OnInit {
         console.log(response);
         this.getEducations();
         addEducationForm.reset();
+        let inputElement:HTMLElement = this.closeAddModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha guardado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -52,6 +60,9 @@ export class EducationComponent implements OnInit {
       (response: EducationArray) => {
         console.log(response);
         this.getEducations();
+        let inputElement:HTMLElement = this.closeUpdateModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha guardado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -64,6 +75,9 @@ export class EducationComponent implements OnInit {
       (response: void) => {
         console.log(response);
         this.getEducations();
+        let inputElement:HTMLElement = this.closeDeleteModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha borrado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

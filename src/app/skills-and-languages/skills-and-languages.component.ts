@@ -7,6 +7,7 @@ import { LanguageService } from './language.service';
 import { NgForOf } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
+import { ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-skills-and-languages',
@@ -14,6 +15,13 @@ import { AuthenticationService } from '../authentication.service';
   styleUrls: ['./skills-and-languages.component.css']
 })
 export class SkillsAndLanguagesComponent implements OnInit {
+  @ViewChild('closeAddSkillModalButton') closeAddSkillModalButton: ElementRef;
+  @ViewChild('closeUpdateSkillModalButton') closeUpdateSkillModalButton: ElementRef;
+  @ViewChild('closeDeleteSkillModalButton') closeDeleteSkillModalButton: ElementRef;
+  
+  @ViewChild('closeAddLangModalButton') closeAddLangModalButton: ElementRef;
+  @ViewChild('closeUpdateLangModalButton') closeUpdateLangModalButton: ElementRef;
+  @ViewChild('closeDeleteLangModalButton') closeDeleteLangModalButton: ElementRef;
 
   public habilidades: SkillArray[];
   public editSkill: SkillArray;
@@ -50,6 +58,9 @@ export class SkillsAndLanguagesComponent implements OnInit {
         console.log(response);
         this.getSkills();
         addSkillForm.reset();
+        let inputElement:HTMLElement = this.closeAddSkillModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha guardado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -63,6 +74,9 @@ export class SkillsAndLanguagesComponent implements OnInit {
       (response: SkillArray) => {
         console.log(response);
         this.getSkills();
+        let inputElement:HTMLElement = this.closeUpdateSkillModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha guardado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -75,6 +89,9 @@ export class SkillsAndLanguagesComponent implements OnInit {
       (response: void) => {
         console.log(response);
         this.getSkills();
+        let inputElement:HTMLElement = this.closeDeleteSkillModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha borrado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -102,6 +119,9 @@ export class SkillsAndLanguagesComponent implements OnInit {
         console.log(response);
         this.getLanguages();
         addLanguageForm.reset();
+        let inputElement:HTMLElement = this.closeAddLangModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha guardado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -115,6 +135,9 @@ export class SkillsAndLanguagesComponent implements OnInit {
       (response: LangArray) => {
         console.log(response);
         this.getLanguages();
+        let inputElement:HTMLElement = this.closeUpdateLangModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha guardado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -127,6 +150,9 @@ export class SkillsAndLanguagesComponent implements OnInit {
       (response: void) => {
         console.log(response);
         this.getLanguages();
+        let inputElement:HTMLElement = this.closeDeleteLangModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha borrado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

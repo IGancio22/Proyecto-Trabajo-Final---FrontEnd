@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { LoginArray } from '../interfaceArrays';
+import { ViewChild, ElementRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-login',
@@ -10,6 +12,9 @@ import { LoginArray } from '../interfaceArrays';
 })
 
 export class LoginComponent implements OnInit {
+
+  @ViewChild('closeLoginModalButton') closeLoginModalButton: ElementRef;
+  @ViewChild('closeLogoutModalButton') closeLogoutModalButton: ElementRef;
 
   username = 'letmein';
   password = '';
@@ -24,9 +29,20 @@ export class LoginComponent implements OnInit {
     if (this.loginService.authenticate(login.username, login.password)) {
       this.invalidLogin = false;
       this.session = true;
+      let inputElement:HTMLElement = this.closeLoginModalButton.nativeElement as HTMLElement;
+      inputElement.click();
+      alert("Se ha autentificado correctamente")
+
     } else {
       this.invalidLogin = true;
+      alert("El usuario o contraseña que ha ingresado no existe")
     }
+  }
+
+  logout() {
+    this.loginService.logOut()
+    let inputElement:HTMLElement = this.closeLogoutModalButton.nativeElement as HTMLElement;
+      inputElement.click();
   }
 
   public onOpenModal(mode: string): void{

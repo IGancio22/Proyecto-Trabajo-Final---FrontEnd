@@ -37,7 +37,7 @@
             <form #addExperienceForm = "ngForm" (ngSubmit)="onAddExperience(addExperienceForm)">
                 <div class="modal-header">						
                     <h4 class="modal-title">Dar Alta a Experiencia</h4>
-                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                    <button #closeAddModalButton type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 </div>
                 <div class="modal-body">					
                     <div class="form-group">
@@ -68,7 +68,7 @@
             <form #updateExperienceForm = "ngForm">
                 <div class="modal-header">						
                     <h4 class="modal-title">Modificar Experiencia</h4>
-                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                    <button #closeUpdateModalButton type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 </div>
                 <div class="modal-body">					
                     <div class="form-group">
@@ -101,7 +101,7 @@
             <form>
                 <div class="modal-header">						
                     <h4 class="modal-title">Dar Baja a Habilidad</h4>
-                    <button type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                    <button #closeDeleteModalButton type="button" class="close text-light border-0 rounded-2 bg-danger mt-1" data-bs-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                 </div>
                 <div class="modal-body text-center">					
                     <p>Esta seguro que quiere borrar el registro {{deleteExperience?.name}}?</p>

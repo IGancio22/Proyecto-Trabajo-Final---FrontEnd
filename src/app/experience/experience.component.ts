@@ -5,6 +5,7 @@ import { ExperienceArray } from '../interfaceArrays'
 import { ExperienceService } from './experience.service';
 import { LoginComponent } from '../login/login.component';
 import { AuthenticationService } from '../authentication.service';
+import { ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-experience',
@@ -12,6 +13,9 @@ import { AuthenticationService } from '../authentication.service';
   styleUrls: ['./experience.component.css']
 })
 export class ExperienceComponent implements OnInit {
+  @ViewChild('closeAddModalButton') closeAddModalButton: ElementRef;
+  @ViewChild('closeUpdateModalButton') closeUpdateModalButton: ElementRef;
+  @ViewChild('closeDeleteModalButton') closeDeleteModalButton: ElementRef;
 
   public experiencias: ExperienceArray[] = [];
   editExperience: ExperienceArray;
@@ -41,6 +45,9 @@ export class ExperienceComponent implements OnInit {
         console.log(response);
         this.getExperiences();
         addExperienceForm.reset();
+        let inputElement:HTMLElement = this.closeAddModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha guardado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -54,6 +61,9 @@ export class ExperienceComponent implements OnInit {
       (response: ExperienceArray) => {
         console.log(response);
         this.getExperiences();
+        let inputElement:HTMLElement = this.closeUpdateModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha guardado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -66,6 +76,9 @@ export class ExperienceComponent implements OnInit {
       (response: void) => {
         console.log(response);
         this.getExperiences();
+        let inputElement:HTMLElement = this.closeDeleteModalButton.nativeElement as HTMLElement;
+        inputElement.click();
+        alert("se ha borrado correctamente")
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
